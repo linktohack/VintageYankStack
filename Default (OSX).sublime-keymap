@@ -1,0 +1,16 @@
+[
+	{ "keys": ["super+p"], "command": "vi_yank_stack",
+		"args": {
+			"forward": false,
+			"fallback_command":"show_overlay",
+			"fallback_args": { "overlay": "goto", "show_files": true }
+		}
+	},
+	{ "keys": ["super+n"], "command": "vi_yank_stack",
+		"args": {
+			"forward": true,
+			"fallback_command":"new_file"
+		}
+	}
+]
+
