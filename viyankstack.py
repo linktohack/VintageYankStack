@@ -34,13 +34,15 @@ class ViYankStackCommand(sublime_plugin.WindowCommand):
                 g_registers['"'] = g_registers['0']
                 g_registers['+'] = g_registers['0']
                 g_registers['*'] = g_registers['0']
-                sublime.set_clipboard(g_registers['0'])
+                
+                if view.settings().get('vintage_use_clipboard', False):
+                    sublime.set_clipboard(g_registers['0'])
             except KeyError:
                 pass
             else:
                 self.window.run_command('undo')
                 self.window.active_view().run_command(last_command[0],
-                                                  last_command[1])
+                                                      last_command[1])
         elif fallback_command:
             run_fallback_command(self.window, fallback_command,
-                                fallback_scope, fallback_args)
+                                 fallback_scope, fallback_args)
