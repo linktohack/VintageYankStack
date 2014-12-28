@@ -1,17 +1,18 @@
 [
-	{ "keys": ["super+p"], "command": "vi_yank_stack",
+	{ "keys": ["ctrl+p"], "command": "vi_yank_stack",
 		"args": {
 			"forward": false,
-			"fallback_command":"show_overlay",
+			"fallback_command": "move",
 			"fallback_scope": "window",
-			"fallback_args": { "overlay": "goto", "show_files": true }
+			"fallback_args": { "by": "lines", "forward": false }
 		}
 	},
-	{ "keys": ["super+n"], "command": "vi_yank_stack",
+	{ "keys": ["ctrl+n"], "command": "vi_yank_stack",
 		"args": {
 			"forward": true,
-			"fallback_command":"new_file",
-			"fallback_scope": "window"
+			"fallback_command": "move",
+			"fallback_scope": "window",
+			"fallback_args": { "by": "lines", "forward": true }
 		}
 	}
 ]
