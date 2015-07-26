@@ -72,6 +72,12 @@ class ViRightDelete(sublime_plugin.TextCommand):
         self.view.run_command('right_delete')
         clip_empty_selection_to_line_contents(self.view)
 
+class ViCopy(sublime_plugin.TextCommand):
+    def run(self, edit, register = '"'):
+        set_register(self.view, register, forward=True)
+        set_register(self.view, '0', forward=True)
+        transform_selection_regions(self.view, shrink_to_first_char)
+
 def set_register(view, register, forward):
     delta = 1
     if not forward:
