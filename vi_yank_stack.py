@@ -1,28 +1,11 @@
-from pprint import pprint
-
 import sublime, sublime_plugin
 from Vintage.vintage import g_registers, clip_empty_selection_to_line_contents
-
-debug = lambda *args, **kwargs: None
-debug = print
-
-def last_command_before_yank_stack(view):
-    i = 0;
-    while True:
-        last_command = view.command_history(i)
-        if last_command[0] != 'vi_yank_stack':
-            break
-        else:
-            i = i - 1
-    return last_command
 
 class InputStateTracker(sublime_plugin.EventListener):
     def on_query_context(self, view, key, operator, operand, match_all):
         if key == "vi_has_just_pasted":
-            last_command = last_command_before_yank_stack(view)
+            last_command = view.command_history(0)
             has_just_pasted = last_command[0] in ('vi_paste_left', 'vi_paste_right')
-            # debug('last_command', last_command)
-            # debug('has_just_pasted', has_just_pasted)
             if operator == sublime.OP_EQUAL:
                 return operand == has_just_pasted
             if operator == sublime.OP_NOT_EQUAL:
@@ -38,9 +21,7 @@ class ViYankStackCommand(sublime_plugin.TextCommand):
 
     def run(self, forward=False, fallback_command=False,
             fallback_scope = 'window', fallback_args = {}):
-        debug('current g_registers')
-        pprint(g_registers)
-        last_command = last_command_before_yank_stack(self.view)
+        last_command = self.view.command_history(0)
         if last_command[0] in ('vi_paste_left', 'vi_paste_right'):
             for i in range(9, -1, -1):
                     if '%s' % i in g_registers:
@@ -60,8 +41,6 @@ class ViYankStackCommand(sublime_plugin.TextCommand):
 
                 del g_registers['_']
                 g_registers['"'] = g_registers['0']
-                debug('shifted g_registers')
-                pprint(g_registers)
                 if self.view.settings().get('vintage_use_clipboard', False):
                     sublime.set_clipboard(g_registers['0'])
                     g_registers['+'] = g_registers['0']
@@ -69,9 +48,7 @@ class ViYankStackCommand(sublime_plugin.TextCommand):
             except KeyError:
                 pass
             else:
-                debug('undo')
                 self.view.window().run_command('undo')
-                debug('last_command', last_command)
                 for _ in range(last_command[2]):
                     self.view.run_command(*last_command[:2])
 
@@ -134,5 +111,3 @@ def set_register(view, register, forward):
             g_registers[reg] += text
         else:
             g_registers[reg] = text
-    debug('g_registers')
-    pprint(g_registers)
