@@ -1,6 +1,9 @@
 import sublime, sublime_plugin
 from Vintage.vintage import g_registers, clip_empty_selection_to_line_contents
 
+debug = lambda *args, **kwargs: None
+debug = print
+
 def run_fallback_command(view, command, scope, args):
     if command:
         if scope == 'window':
@@ -93,11 +96,12 @@ def set_register(view, register, forward):
 
     if register == '%':
         pass
-    elif register == '0':
-        for i in range(9, 0, -1):
-            if '%s' % (i - 1) in g_registers:
-                g_registers['%s' % i] = g_registers['%s' % (i - 1)]
     else:
+        if register == '0':
+            debug('Zero')
+            for i in range(9, 0, -1):
+                if '%s' % (i - 1) in g_registers:
+                    g_registers['%s' % i] = g_registers['%s' % (i - 1)]
         reg = register.lower()
         append = (reg != register)
 
