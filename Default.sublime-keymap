@@ -1,18 +1,4 @@
 [
-	{ "keys": ["ctrl+p"], "command": "vi_yank_stack",
-		"args": {
-			"forward": false,
-			"fallback_command":"show_overlay",
-			"fallback_scope": "window",
-			"fallback_args": { "overlay": "goto", "show_files": true }
-		}
-	},
-	{ "keys": ["ctrl+n"], "command": "vi_yank_stack",
-		"args": {
-			"forward": true,
-			"fallback_command":"new_file",
-			"fallback_scope": "window"
-		}
-	}
+    { "keys": ["ctrl+p"], "command": "vi_yank_stack", "args": {"forward": false }, "context": [{ "key": "vi_is_just_pasted" }] },
+    { "keys": ["ctrl+n"], "command": "vi_yank_stack", "args": {"forward": true, }, "context": [{ "key": "vi_is_just_pasted" }] }
 ]
-
