@@ -1,6 +1,9 @@
 import sublime, sublime_plugin
 from Vintage.vintage import g_registers, clip_empty_selection_to_line_contents
 
+debug = lambda *args, **kwargs: None
+# debug = print
+
 class InputStateTracker(sublime_plugin.EventListener):
     def on_query_context(self, view, key, operator, operand, match_all):
         if key == "vi_has_just_pasted":
@@ -16,7 +19,6 @@ class ViYankStackCommand(sublime_plugin.TextCommand):
     def run_(self, edit_token, args):
         if 'event' in args:
             del args['event']
-
         return self.run(**args)
 
     def run(self, forward=False, fallback_command=False,
@@ -38,7 +40,6 @@ class ViYankStackCommand(sublime_plugin.TextCommand):
                     for i in range(top, 0, -1):
                         g_registers['%s' % i] = g_registers['%s' % (i - 1)]
                     g_registers['0'] = g_registers['_']
-
                 del g_registers['_']
                 g_registers['"'] = g_registers['0']
                 if self.view.settings().get('vintage_use_clipboard', False):
@@ -104,6 +105,7 @@ def set_register(view, register, forward):
             for i in range(9, 0, -1):
                 if '%s' % (i - 1) in g_registers:
                     g_registers['%s' % i] = g_registers['%s' % (i - 1)]
+
         reg = register.lower()
         append = (reg != register)
 
