@@ -29,29 +29,26 @@ class ViYankStackCommand(sublime_plugin.TextCommand):
                     if '%s' % i in g_registers:
                         top = i
                         break
-            try:
-                if not forward:
-                    g_registers['_'] = g_registers['0']
-                    for i in range(0, top):
-                        g_registers['%s' % i] = g_registers['%s' % (i + 1)]
-                    g_registers['%s' % top] = g_registers['_']
-                else:
-                    g_registers['_'] = g_registers['%s' % top]
-                    for i in range(top, 0, -1):
-                        g_registers['%s' % i] = g_registers['%s' % (i - 1)]
-                    g_registers['0'] = g_registers['_']
-                del g_registers['_']
-                g_registers['"'] = g_registers['0']
-                if self.view.settings().get('vintage_use_clipboard', False):
-                    sublime.set_clipboard(g_registers['0'])
-                    g_registers['+'] = g_registers['0']
-                    g_registers['*'] = g_registers['0']
-            except KeyError:
-                pass
+            if not forward:
+                g_registers['_'] = g_registers['0']
+                for i in range(0, top):
+                    g_registers['%s' % i] = g_registers['%s' % (i + 1)]
+                g_registers['%s' % top] = g_registers['_']
             else:
-                self.view.window().run_command('undo')
-                for _ in range(last_command[2]):
-                    self.view.run_command(*last_command[:2])
+                g_registers['_'] = g_registers['%s' % top]
+                for i in range(top, 0, -1):
+                    g_registers['%s' % i] = g_registers['%s' % (i - 1)]
+                g_registers['0'] = g_registers['_']
+            del g_registers['_']
+            g_registers['"'] = g_registers['0']
+            if self.view.settings().get('vintage_use_clipboard', False):
+                sublime.set_clipboard(g_registers['0'])
+                g_registers['+'] = g_registers['0']
+                g_registers['*'] = g_registers['0']
+                
+            self.view.window().run_command('undo')
+            for _ in range(last_command[2]):
+                self.view.run_command(*last_command[:2])
 
 # Override ViDelete series
 class ViDelete(sublime_plugin.TextCommand):
