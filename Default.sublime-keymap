@@ -1,4 +1,4 @@
 [
-    { "keys": ["ctrl+p"], "command": "vi_yank_stack", "args": {"forward": false }, "context": [{ "key": "vi_is_just_pasted" }] },
-    { "keys": ["ctrl+n"], "command": "vi_yank_stack", "args": {"forward": true, }, "context": [{ "key": "vi_is_just_pasted" }] }
+    { "keys": ["ctrl+p"], "command": "vi_yank_stack", "args": {"forward": false }, "context": [{ "key": "vi_has_just_pasted" }] },
+    { "keys": ["ctrl+n"], "command": "vi_yank_stack", "args": {"forward": true, }, "context": [{ "key": "vi_has_just_pasted" }] }
 ]
