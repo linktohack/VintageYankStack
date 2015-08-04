@@ -21,8 +21,7 @@ class ViYankStackCommand(sublime_plugin.TextCommand):
             del args['event']
         return self.run(**args)
 
-    def run(self, forward=False, fallback_command=False,
-            fallback_scope = 'window', fallback_args = {}):
+    def run(self, forward=False):
         last_command = self.view.command_history(0)
         if last_command[0] in ('vi_paste_left', 'vi_paste_right'):
             for i in range(9, -1, -1):
