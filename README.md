@@ -8,11 +8,11 @@ One of the killer features from `Emacs` is `Kill Ring`, which allow to paste the
 `Sublime Text` introduces a kill ring compatible with Emacs but it doesn't do what it should do, especially with Vintage, so I wrote it my self. The idea (and name) from the excellent [YankStack](https://github.com/maxbrunsfeld/vim-yankstack) plugin for Vim which is lightweight and elegant.
 
 ## Install
-### Via package control (Recommmend)
-<kbd>CTRL</kbd>+<kbd>SHIFT</kbd>+<kbd>P</kbd>, `Install Package`, then `YankStack` to install.
+### Via package control (Recommended)
+<kbd>CTRL</kbd>+<kbd>SHIFT</kbd>+<kbd>P</kbd>, `Install Packagee`, then `YankStack` to install.
 
 ### Manual
-Clone [this repo](https://github.com/linktohack/VintageYankStack) to your Packges directory, modify the keymaps if needed.
+Clone [this repo](https://github.com/linktohack/VintageYankStack) to your Packages directory, modify the keymap if needed.
 
 ## Usage
 Default keymaps are:
