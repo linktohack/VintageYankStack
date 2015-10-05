@@ -1,5 +1,8 @@
 import sublime, sublime_plugin
-from Vintage.vintage import g_registers, clip_empty_selection_to_line_contents
+from Vintage.vintage import g_registers, \
+                            clip_empty_selection_to_line_contents, \
+                            transform_selection_regions, \
+                            shrink_to_first_char
 
 debug = lambda *args, **kwargs: None
 # debug = print
